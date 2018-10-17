@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Breadcrumb, BreadcrumbItem, Button, Label, Col, Row, FormFeedback} from 'reactstrap';
+import {Breadcrumb, BreadcrumbItem, Button, Label, Col, Row} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
@@ -84,7 +84,7 @@ class Contact extends Component {
                                         messages={{
                                             required: 'Required ',
                                             minLength: 'Must be greater than 2 characters',
-                                            MaxLength: 'Must be 15 characters or less'
+                                            maxLength: 'Must be 15 characters or less'
                                         }}
                                 />
                             </Col>
@@ -105,7 +105,7 @@ class Contact extends Component {
                                         messages={{
                                             required: 'Required ',
                                             minLength: 'Must be greater than 2 characters',
-                                            MaxLength: 'Must be 15 characters or less'
+                                            maxLength: 'Must be 15 characters or less'
                                         }}
                                     />    
                             </Col>                            
@@ -127,7 +127,7 @@ class Contact extends Component {
                                         messages={{
                                             required: 'Required ',
                                             minLength: 'Must be greater than 2 characters ',
-                                            MaxLength: 'Must be 15 characters or less ',
+                                            maxLength: 'Must be 15 characters or less ',
                                             isNumber: 'Must be a number'
                                         }}
                                     />
