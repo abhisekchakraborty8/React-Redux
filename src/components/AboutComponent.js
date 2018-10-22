@@ -2,22 +2,29 @@ import React from 'react';
 
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
-            
+            <Stagger in>            
                 <Media tag="li">
+                <Fade in>
                   <Media left middle>
-                      <Media object src={leader.image} alt={leader.name} />
+                      <Media object src={baseUrl + leader.image} alt={leader.name} />
                   </Media>
+                  </Fade>
+                  <Fade in>
                   <Media body className="ml-5">
                     <Media heading>{leader.name}</Media>
                     <p>{leader.designation}</p>
                     <p>{leader.description}</p>
                   </Media>
+                  </Fade>
                 </Media>
+            </Stagger>
               
         );
     });
@@ -41,6 +48,10 @@ function About(props) {
                     <p>The restaurant traces its humble beginnings to <em>The Frying Pan</em>, a successful chain started by our CEO, Mr. Peter Pan, that featured for the first time the world's best cuisines in a pan.</p>
                 </div>
                 <div className="col-12 col-md-5">
+                <FadeTransform in 
+                    transformProps={{
+                        exitTransform: 'scale(0.5) translateY(-50%)'
+                    }}>
                     <Card>
                         <CardHeader className="bg-primary text-white">Facts At a Glance</CardHeader>
                         <CardBody>
@@ -56,6 +67,7 @@ function About(props) {
                             </dl>
                         </CardBody>
                     </Card>
+                </FadeTransform>
                 </div>
                 <div className="col-12">
                     <Card>

@@ -5,6 +5,7 @@ import { Card, CardImg, CardText, CardBody,
 import {Link} from 'react-router-dom';
 import {Loading} from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 //import { Control, LocalForm, Errors } from 'react-redux-form'
 
 class DishDetail extends Component {
@@ -56,7 +57,9 @@ class DishDetail extends Component {
     
     handleSubmit(event){
         this.toggleModal();
-        this.props.addComment(this.props.dish.id, this.state.ratingValue, this.state.yourName, this.state.message);
+        alert('In handle submit\n values submitted is as folows \n dish id is: '+ this.props.dish.id +
+        '\nRating is : '+this.state.ratingValue +'\nyour name is: '+this.state.yourName +'\nyour comment is: '+this.state.message);
+        this.props.postComment(this.props.dish.id, this.state.ratingValue, this.state.yourName, this.state.message);
     
         event.preventDefault();
     }  
@@ -69,30 +72,41 @@ class DishDetail extends Component {
         renderDish(dish) {
             if (dish != null)
                 return(
-                    <Card>
-                        <CardImg top src={baseUrl + dish.image} alt={dish.name} />
-                        <CardBody>
-                          <CardTitle>{dish.name}</CardTitle>
-                          <CardText>{dish.description}</CardText>
+                    <FadeTransform in 
+                    transformProps={{
+                        exitTransform: 'scale(0.5) translateY(-50%)'
+                    }}>
+                        <Card>
+                            <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                            <CardBody>
+                            <CardTitle>{dish.name}</CardTitle>
+                            <CardText>{dish.description}</CardText>
 
-                        </CardBody>
-                    </Card>
+                            </CardBody>
+                        </Card>
+                    </FadeTransform>
                 );
             else
                 return(
                     <div></div>
                 );
         }
-        renderComments(comments, addComment, dishId){
+        renderComments(comments, postComment, dishId){
             if(comments !=null){
                 const dishC = comments.map((comments) => {
                     return (
                             <div  className="row" key={comments.id}>
+                                
                                   <CardBody>
+                                      <Fade in>
                                       <CardText>{comments.comment} </CardText>
+                                      </Fade>
+                                      <Fade in>
                                       <CardText>--{comments.author}, {new Intl.DateTimeFormat('en-US', 
                                           { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comments.date)))} </CardText>
+                                        </Fade>
                                   </CardBody>
+                                  
                            </div>
                         
                         );
@@ -143,9 +157,10 @@ class DishDetail extends Component {
                     <div  className="col-12 col-md-5 m-1">
                         
                             <CardTitle>Comments</CardTitle>
+                            <Stagger in>
                                 {this.renderComments(this.props.comments, 
-                                    this.props.addComment, this.props.dish.id)}
-                        
+                                    this.props.postComment, this.props.dish.id)}
+                            </Stagger>                        
 
                             <Button outline onClick={this.toggleModal}>
                                 <span className="fa fa-pencil fa-lg"> Comment</span>
